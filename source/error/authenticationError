@@ -1,0 +1,6 @@
+package source/error
+
+type LoginError struct {
+	Error  string `json:"error`
+	Reason string `json:"reason"`
+}

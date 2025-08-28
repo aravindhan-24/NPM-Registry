@@ -1,0 +1,14 @@
+{
+    "server":{
+        "port":2402,
+        "tls":{
+            "ca-cert":"",
+            "ca-key":"",
+            "ca-pem":""
+        }
+    },
+    "storage":{
+        "directory":""
+    }
+
+}
