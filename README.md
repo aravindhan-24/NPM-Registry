@@ -37,17 +37,17 @@ The **NPM-Registry** project is designed to provide a private registry solution 
 
 4. Configure your NPM client to use the local registry:
 
-   npm set registry http://localhost:4873/
+   npm set registry http://localhost:2402/
 
 ## Usage
 
 * To publish a package:
 
-  npm publish --registry http://localhost:4873/
+  npm publish --registry http://localhost:2402/
 
 * To install a package:
 
-  npm install <package-name> --registry http://localhost:4873/
+  npm install <package-name> --registry http://localhost:2402/
 
 ## Configuration
 
