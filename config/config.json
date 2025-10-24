@@ -2,13 +2,15 @@
     "server":{
         "port":2402,
         "tls":{
-            "ca-cert":"",
-            "ca-key":"",
-            "ca-pem":""
+            "ca-cert":"/home/aravind-14205/Documents/personal/npm-registry/NPM-Registry/cert/npm-server.crt",
+            "ca-key":"/home/aravind-14205/Documents/personal/npm-registry/NPM-Registry/cert/npm-server.key",
+            "ca-pem":"/home/aravind-14205/Documents/personal/npm-registry/NPM-Registry/cert/npm-server.pem"
         }
     },
     "storage":{
-        "directory":""
+        "directory":"~/Desktop/npm",
+        "db_path":"~/Desktop/npm/npm-registry.db",
+        "hashing_cost":4
     }
 
 }

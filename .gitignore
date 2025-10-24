@@ -1,0 +1,4 @@
+#Git ignore files and dir
+npm_data/
+npm_test_data/
+.vscode/

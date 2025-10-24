@@ -2,16 +2,16 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 )
 
 func ServeTarBall(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Authorization header", r.Header.Get("Authorization"))
+	log.Println("Authorization header", r.Header.Get("Authorization"))
 }
 
 func ServeMetaData(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Authorization header", r.Header.Get("Authorization"))
+	log.Println("Authorization header", r.Header.Get("Authorization"))
 	metadata := map[string]interface{}{
 		"name": "mypackage",
 		"dist-tags": map[string]string{
