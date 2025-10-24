@@ -26,7 +26,7 @@ type TLS struct {
 type Storage struct {
 	Data_dir  string `json:"directory"`
 	DB_File   string `json:"db_path"`
-	Hash_cost string `json:"hashing_cost"` // min 4 , max 31
+	Hash_cost int    `json:"hashing_cost"` // min 4 , max 31
 }
 
 func ParseConfig() *Config {

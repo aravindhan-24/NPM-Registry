@@ -3,6 +3,8 @@ package utility
 import (
 	"database/sql"
 	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type SQLiteDBConnector struct {
@@ -22,7 +24,7 @@ func (db *SQLiteDBConnector) AddAdminCredentials() bool {
 	var id int
 	var userName, password string
 	err := db.Connector.QueryRow(
-		"SELECT id, username,password FROM CREDENTIALS WHERE USER = ? AND PASSWORD = ?",
+		"SELECT id, user_name,password FROM credentials WHERE user_name = ? AND password = ?",
 		"admin",
 		"admin").Scan(&id, &userName, &password)
 	if err != nil {
@@ -33,7 +35,11 @@ func (db *SQLiteDBConnector) AddAdminCredentials() bool {
 				log.Println("Unable to hash password")
 				return false
 			}
-			_, err = db.Connector.Exec("INSERT INTO CREDENTIALS VALUE(?,?)", "admin", hashedPassword)
+			_, err = db.Connector.Exec(
+				"INSERT INTO credentials (user_name, password) VALUES(?, ?)",
+				"admin",
+				hashedPassword,
+			)
 			if err != nil {
 				return false
 			}

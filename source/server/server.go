@@ -17,7 +17,7 @@ func init() {
 	utility.CheckDir()
 	db, err := utility.NewSQLiteDB(config.Data_dir.DB_File)
 	if err != nil {
-		log.Fatal("Unable to init sqllite db")
+		log.Fatal("Unable to init sqllite db", err)
 	}
 	if !db.CreateTables() {
 		log.Fatal("Unable to populate tables")

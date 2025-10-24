@@ -15,7 +15,7 @@ type PackageVersion struct {
 	Main         string            `json:"main"`
 	Scripts      map[string]string `json:"scripts"`
 	Keywords     []string          `json:"keywords"`
-	Author       string            `json:"author"`
+	Author       map[string]string `json:"author"`
 	License      string            `json:"license"`
 	Dependencies map[string]string `json:"dependencies"`
 	ID           string            `json:"_id"`

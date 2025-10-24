@@ -14,15 +14,29 @@ import (
 
 func HandlePublish(w http.ResponseWriter, r *http.Request) {
 	log.Println("Authorization header", r.Header.Get("Authorization"))
-	body, err := io.ReadAll(r.Body)
+	httpbody, err := io.ReadAll(r.Body)
 	if err != nil {
 		log.Println("Unable to read body ", err)
 	}
 	var publishStruct constants.Package
-	if err := json.Unmarshal(body, &publishStruct); err != nil {
+	if err := json.Unmarshal(httpbody, &publishStruct); err != nil {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
+
+	file, err := os.Create("/home/aravind-14205/Desktop/npm/npm_test_data/v1/hello/meta.json")
+	if err != nil {
+		http.Error(w, "Unable to parse meta ", http.StatusBadRequest)
+		return
+	}
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", " ")
+	err = encoder.Encode(publishStruct)
+	if err != nil {
+		http.Error(w, "Unable to write meta ", http.StatusBadRequest)
+		return
+	}
+
 	for fileName, attachment := range publishStruct.Attachments {
 		dataBytes, err := base64.StdEncoding.DecodeString(strings.TrimSpace(attachment.Data))
 		if err != nil {
@@ -30,9 +44,9 @@ func HandlePublish(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		log.Println("fileName ", fileName)
+		log.Println("fileName ", "/home/aravind-14205/Desktop/npm/npm_test_data/v1/hello/"+fileName)
 		// read root path from config and write in that path
-		file, err := os.Create(fileName)
+		file, err := os.Create("/home/aravind-14205/Desktop/npm/npm_test_data/v1/hello/" + fileName)
 		if err != nil {
 			log.Println("Unable to create file")
 			continue
