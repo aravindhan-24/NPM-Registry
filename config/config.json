@@ -8,8 +8,8 @@
         }
     },
     "storage":{
-        "directory":"~/Desktop/npm",
-        "db_path":"~/Desktop/npm/npm-registry.db",
+        "directory":"/home/aravind-14205/Desktop/npm",
+        "db_path":"/home/aravind-14205/Desktop/npm/npm-registry.db",
         "hashing_cost":4
     }
 

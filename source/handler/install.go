@@ -36,17 +36,37 @@ func ServeTarBall(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeMetaData(w http.ResponseWriter, r *http.Request) {
-	log.Println("Authorization header", r.Header.Get("Authorization"))
-	log.Println("In coming URI ,", r.URL)
-	data, err := os.ReadFile("/home/aravind-14205/Desktop/npm/npm_test_data/v1/hello/meta.json")
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Unable to read meta ", http.StatusNotFound)
+	log.Println("Authorization header:", r.Header.Get("Authorization"))
+	log.Println("Incoming URI:", r.URL.Path)
+
+	pkgName := strings.TrimPrefix(r.URL.Path, "/")
+	if pkgName == "" {
+		http.Error(w, "Package name missing in URL", http.StatusBadRequest)
 		return
 	}
-	var metadata constants.InstallPackage
-	json.Unmarshal(data, &metadata)
-	log.Println(metadata)
+
+	metaFilePath := fmt.Sprintf("/home/aravind-14205/Desktop/npm/npm_test_data/v1/%s/meta.json", pkgName)
+
+	data, err := os.ReadFile(metaFilePath)
+	if err != nil {
+		log.Printf("Error reading metadata for package %s: %v", pkgName, err)
+		http.Error(w, fmt.Sprintf("Package '%s' not found", pkgName), http.StatusNotFound)
+		return
+	}
+
+	var metadata constants.Package
+	if err := json.Unmarshal(data, &metadata); err != nil {
+		log.Printf("Error parsing JSON for package %s: %v", pkgName, err)
+		http.Error(w, "Invalid metadata format", http.StatusInternalServerError)
+		return
+	}
+
+	latest := metadata.DistTags["latest"]
+	log.Printf("Serving metadata for package: %s@%s", metadata.Name, latest)
+
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(metadata)
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(metadata); err != nil {
+		log.Println("Error encoding JSON response:", err)
+	}
 }
